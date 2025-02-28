@@ -13,24 +13,35 @@ let calendar = new Calendar(calendarEl, {
         right: 'dayGridMonth,timeGridWeek,listWeek'
     },
     locale: "ja",
+    timeZone: 'Asia/Tokyo',
     selectable: true,
     allDaySlot: true,
     select: function(info) {
         // alert('selected ' + info.startStr + ' to ' + info.endStr);
         const eventName = prompt("Enter a Title for the Event");
         if (eventName) {
-            calendar.addEvent({
-                title: eventName,
-                start: info.start,
-                end: info.end,
-                allDay: true,
-                // borderColor: 'red', // 境界線の色。自由に変えてね
-                // textColor: 'blue', // テキストの色。自由に変えてね
-                // backgroundColor: 'yellow', // 背景の色。自由に変えてね
-            });
+            axios
+                .post("/schedule-add", {
+                    start_date: info.start.valueOf(),
+                    end_date: info.end.valueOf(),
+                    event_name: eventName,
+                })
+                .then(() => {
+                    calendar.addEvent({
+                        title: eventName,
+                        start: info.start,
+                        end: info.end,
+                        allDay: true,
+                        // borderColor: 'red', // 境界線の色。自由に変えてね
+                        // textColor: 'blue', // テキストの色。自由に変えてね
+                        // backgroundColor: 'yellow', // 背景の色。自由に変えてね
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error response:", error.response);
+                    alert("登録に失敗しました");
+                });
         }
     },
-
-
 });
 calendar.render();
