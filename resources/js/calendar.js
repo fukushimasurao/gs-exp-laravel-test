@@ -16,7 +16,21 @@ let calendar = new Calendar(calendarEl, {
     selectable: true,
     allDaySlot: true,
     select: function(info) {
-        alert('selected ' + info.startStr + ' to ' + info.endStr);
-    }
+        // alert('selected ' + info.startStr + ' to ' + info.endStr);
+        const eventName = prompt("Enter a Title for the Event");
+        if (eventName) {
+            calendar.addEvent({
+                title: eventName,
+                start: info.start,
+                end: info.end,
+                allDay: true,
+                // borderColor: 'red', // 境界線の色。自由に変えてね
+                // textColor: 'blue', // テキストの色。自由に変えてね
+                // backgroundColor: 'yellow', // 背景の色。自由に変えてね
+            });
+        }
+    },
+
+
 });
 calendar.render();
