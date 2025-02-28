@@ -11,6 +11,9 @@ let calendar = new Calendar(calendarEl, {
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,listWeek'
-    }
+    },
+    locale: "ja",
+    selectable: true,
+    allDaySlot: true,
 });
 calendar.render();
