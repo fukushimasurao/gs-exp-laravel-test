@@ -15,5 +15,8 @@ let calendar = new Calendar(calendarEl, {
     locale: "ja",
     selectable: true,
     allDaySlot: true,
+    select: function(info) {
+        alert('selected ' + info.startStr + ' to ' + info.endStr);
+    }
 });
 calendar.render();
