@@ -31,7 +31,7 @@ let calendar = new Calendar(calendarEl, {
                         title: eventName,
                         start: info.start,
                         end: info.end,
-                        allDay: true,
+                        // allDay: false,
                         // borderColor: 'red', // 境界線の色。自由に変えてね
                         // textColor: 'blue', // テキストの色。自由に変えてね
                         // backgroundColor: 'yellow', // 背景の色。自由に変えてね
@@ -42,6 +42,20 @@ let calendar = new Calendar(calendarEl, {
                     alert("登録に失敗しました");
                 });
         }
+    },
+    events: function (info, successCallback, failureCallback) {
+        axios
+            .post("/schedule-get", {
+                start_date: info.start.valueOf(),
+                end_date: info.end.valueOf(),
+            })
+            .then((response) => {
+                calendar.removeAllEvents();
+                successCallback(response.data);
+            })
+            .catch(() => {
+                alert("登録に失敗しました");
+            });
     },
 });
 calendar.render();
